@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./register.css";
 import {
   validateConfirmPassword,
@@ -11,9 +11,12 @@ import {
   EMAIL_ERROR_MESSAGE,
   NAME_ERROR_MESSAGE,
   PASSWORD_ERROR_MESSAGE,
+  TOKEN,
 } from "../constants";
 import { Field, FormData } from "../components/Form/Form";
 import FormFields from "../components/Form/FormFields";
+import useHttp from "../hooks/useHttp";
+import Model from "../Model/Model";
 
 interface Data extends FormData {
   name: string;
@@ -62,9 +65,19 @@ interface Props {
   onUserCreation: () => void;
 }
 
+interface ResponseType {
+  message: string;
+}
+
 const Register = ({ onUserCreation }: Props) => {
   const [formData, setFormData] = useState(defaultFormData);
   const [errorData, setErrorData] = useState(defaultErrorData);
+  const { loading, errorMessage, statusCode, initiateRequest } =
+    useHttp<ResponseType>({
+      uri: "users/register",
+      method: "POST",
+      isLazy: true,
+    });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
@@ -112,23 +125,16 @@ const Register = ({ onUserCreation }: Props) => {
     if (!isValid()) {
       return;
     }
-    try {
-      const response = await fetch("http://localhost:5000/users/register", {
-        method: "POST",
-        body: JSON.stringify({ name, emailId, password }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
 
-      const data = await response.json();
+    initiateRequest({ name, emailId, password });
+  };
+
+  useEffect(() => {
+    if (statusCode && statusCode.toString().startsWith("2")) {
       setFormData(defaultFormData);
       onUserCreation();
-      console.log("data", data);
-    } catch (err) {
-      console.log("error", err);
     }
-  };
+  }, [statusCode]);
 
   return (
     <div className="container">
@@ -158,6 +164,8 @@ const Register = ({ onUserCreation }: Props) => {
           <button type="submit">Submit</button>
         </div>
       </form>
+      {loading && <Model />}
+      {errorMessage && <p>{errorMessage}</p>}
     </div>
   );
 };

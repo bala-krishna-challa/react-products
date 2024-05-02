@@ -5,3 +5,5 @@ export const PASSWORD_ERROR_MESSAGE =
 export const CONFIRM_PASSWORD_ERROR_MESSAGE =
   "Password and Confirm password must be same.";
 export const TOKEN = "TOKEN";
+
+export const SERVER_BASE_PATH = "http://localhost:5000/";

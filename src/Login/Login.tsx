@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { validateEmail, validatePassword } from "../util";
 import {
   EMAIL_ERROR_MESSAGE,
@@ -7,6 +7,7 @@ import {
 } from "../constants";
 import Form, { FormData, Field } from "../components/Form/Form";
 import Register from "../Register/Register";
+import useHttp from "../hooks/useHttp";
 
 interface LoginFormData extends FormData {
   emailId: string;
@@ -34,32 +35,39 @@ interface Props {
   onUserLogin: (val: boolean) => void;
 }
 
+interface ResponseType {
+  token: string;
+}
+
 const Login = ({ onUserLogin }: Props) => {
-  const handleSubmit = async ({ emailId, password }: LoginFormData) => {
-    try {
-      const response = await fetch("http://localhost:5000/auth/login", {
-        method: "POST",
-        body: JSON.stringify({ emailId, password }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+  const { loading, errorMessage, statusCode, data, initiateRequest } =
+    useHttp<ResponseType>({
+      uri: "auth/login",
+      method: "POST",
+      isPublic: true,
+      isLazy: true,
+    });
 
-      const data = await response.json();
-
-      if (data.status.toString().startsWith("2")) {
-        console.log(TOKEN, data.body.token);
-        sessionStorage.setItem(TOKEN, data.body.token);
-        onUserLogin(true);
-      } else {
-        console.log("error", data.body.message);
-      }
-    } catch (err) {
-      console.log("error", err);
-    }
+  const handleSubmit = ({ emailId, password }: LoginFormData) => {
+    initiateRequest({ emailId, password });
   };
 
-  return <Form title="Login" fields={fields} onSubmit={handleSubmit} />;
+  useEffect(() => {
+    if (statusCode && statusCode.toString().startsWith("2") && data) {
+      sessionStorage.setItem(TOKEN, data.token);
+      onUserLogin(true);
+    }
+  }, [statusCode, data]);
+
+  return (
+    <Form
+      errorMessage={errorMessage}
+      isLoading={loading}
+      title="Login"
+      fields={fields}
+      onSubmit={handleSubmit}
+    />
+  );
 };
 
 export default Login;

@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Register from "../Register/Register";
+import Register from "../../Register/Register";
+import { TOKEN } from "../../constants";
+import useHttp from "../../hooks/useHttp";
+import Model from "../../Model/Model";
 
 interface User {
   name: string;
@@ -22,32 +25,23 @@ const UserList = ({ users }: UserListProps) => {
 
 const AddUser = () => {
   const [users, setUsers] = useState<User[]>([]);
-
-  const fetchUsers = async () => {
-    try {
-      const response = await fetch("http://localhost:5000/users");
-
-      const data = await response.json();
-      setUsers(data.users);
-
-      console.log("data", data);
-    } catch (err) {
-      console.log("error", err);
-    }
-  };
-
-  const handleUserCreation = () => {
-    fetchUsers();
-  };
+  const { loading, errorMessage, statusCode, data, initiateRequest } =
+    useHttp<UserListProps>({
+      uri: "users",
+    });
 
   useEffect(() => {
-    fetchUsers();
-  }, []);
+    if (statusCode && statusCode.toString().startsWith("2") && data) {
+      setUsers(data.users);
+    }
+  }, [statusCode, data]);
 
   return (
     <>
-      <Register onUserCreation={handleUserCreation} />
+      <Register onUserCreation={() => initiateRequest()} />
       <UserList users={users} />
+      {loading && <Model />}
+      {errorMessage && <p>{errorMessage}</p>}
     </>
   );
 };

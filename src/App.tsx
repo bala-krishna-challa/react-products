@@ -7,8 +7,10 @@ import Parent from "./Events/Parent";
 import Count from "./Count/Count";
 import Login from "./Login/Login";
 import Register from "./Register/Register";
-import AddUser from "./AddUser/AddUser";
+import AddUser from "./Users/AddUser/AddUser";
 import { TOKEN } from "./constants";
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "./index.css";
 
 function App() {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
@@ -36,7 +38,6 @@ function App() {
     return <Login onUserLogin={setUserLoggedIn} />;
   }
 
-  console.log("App rendering...");
   return <AddUser />;
 }
 
