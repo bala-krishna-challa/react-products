@@ -11,6 +11,7 @@ import AddUser from "./Users/AddUser/AddUser";
 import { TOKEN } from "./constants";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
+import Users from "./Users/Users";
 
 function App() {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
@@ -38,7 +39,7 @@ function App() {
     return <Login onUserLogin={setUserLoggedIn} />;
   }
 
-  return <AddUser />;
+  return <Users />;
 }
 
 export default App;
