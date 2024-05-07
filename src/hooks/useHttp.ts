@@ -33,7 +33,6 @@ const useHttp = <T>({
     async (reqBody: any = null) => {
       setLoading(true);
       setErrorMessage("");
-      setData(null);
       setStatusCode(null);
 
       let headers: any = {

@@ -7,3 +7,7 @@ export const CONFIRM_PASSWORD_ERROR_MESSAGE =
 export const TOKEN = "TOKEN";
 
 export const SERVER_BASE_PATH = "http://localhost:5000/";
+
+export const SET_USERS = "SET_USERS";
+
+export const SET_SELECTED_USER_ID = "SET_SELECTED_USER_ID";
