@@ -7,7 +7,6 @@ import Parent from "./Events/Parent";
 import Count from "./Count/Count";
 import Login from "./Login/Login";
 import Register from "./Register/Register";
-import AddUser from "./Users/AddUser/AddUser";
 import { TOKEN } from "./constants";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
