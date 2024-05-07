@@ -5,6 +5,7 @@ import useHttp from "../hooks/useHttp";
 import { User } from "../types";
 import UserContext from "../contexts/UserContext";
 import UserList from "./UserList";
+import InfoContext from "../contexts/InfoContext";
 
 interface UserListProps {
   users: User[];
@@ -24,13 +25,17 @@ const Users = () => {
   }, [statusCode, data]);
 
   return (
-    <UserContext.Provider value={{ users, selectedUserId, setSelectedUserId }}>
+    <InfoContext.Provider value={{ info: "Some other value" }}>
       <Register onUserCreation={() => initiateRequest()} />
-      <div className="main-content">
-        <h3 className="header">Platform Users</h3>
-        <UserList />
-      </div>
-    </UserContext.Provider>
+      <UserContext.Provider
+        value={{ users, selectedUserId, setSelectedUserId }}
+      >
+        <div className="main-content">
+          <h3 className="header">Platform Users</h3>
+          <UserList />
+        </div>
+      </UserContext.Provider>
+    </InfoContext.Provider>
   );
 };
 export default Users;

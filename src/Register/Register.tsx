@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./register.css";
 import {
   validateConfirmPassword,
@@ -17,6 +17,7 @@ import { Field, FormData } from "../components/Form/Form";
 import FormFields from "../components/Form/FormFields";
 import useHttp from "../hooks/useHttp";
 import Model from "../Model/Model";
+import InfoContext from "../contexts/InfoContext";
 
 interface Data extends FormData {
   name: string;
@@ -70,6 +71,7 @@ interface ResponseType {
 }
 
 const Register = ({ onUserCreation }: Props) => {
+  const { info } = useContext(InfoContext);
   const [formData, setFormData] = useState(defaultFormData);
   const [errorData, setErrorData] = useState(defaultErrorData);
   const { loading, errorMessage, statusCode, initiateRequest } =
@@ -139,6 +141,7 @@ const Register = ({ onUserCreation }: Props) => {
   return (
     <div className="container">
       <h2 className="header">Register</h2>
+      <p>{info}</p>
       <form className="form" onSubmit={handleSubmit}>
         <FormFields
           fields={fields}

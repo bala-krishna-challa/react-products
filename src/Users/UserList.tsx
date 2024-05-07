@@ -2,6 +2,7 @@ import { useContext } from "react";
 import UserContext from "../contexts/UserContext";
 import React from "react";
 import { FaBars, FaTimes, FaUser } from "react-icons/fa";
+import InfoContext from "../contexts/InfoContext";
 const Card = (props) => {
   const classes = "card " + props.className;
   return <div className={classes}>{props.children}</div>;
@@ -34,10 +35,13 @@ const UserHeaderAction = ({ id }) => {
 };
 
 const UserHeader = ({ name }) => {
+  const { info } = useContext(InfoContext);
   return (
     <h5 className="user-card-header">
       <FaUser className="icon icon-user" />
-      <span>{name}</span>
+      <span>
+        {name} - {info}
+      </span>
     </h5>
   );
 };
