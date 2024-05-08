@@ -1,8 +1,9 @@
 import { useContext } from "react";
-import UserContext from "../contexts/UserContext";
 import React from "react";
 import { FaBars, FaTimes, FaUser } from "react-icons/fa";
 import InfoContext from "../contexts/InfoContext";
+import { useUserContext } from "../contexts/UserProvider";
+
 const Card = (props) => {
   const classes = "card " + props.className;
   return <div className={classes}>{props.children}</div>;
@@ -16,7 +17,8 @@ const CardHeader = (props) => {
 const CardBody = (props) => <div className="card-body">{props.children}</div>;
 
 const UserHeaderAction = ({ id }) => {
-  const { selectedUserId, setSelectedUserId } = useContext(UserContext);
+  const [state] = useUserContext();
+  const { setSelectedUserId, selectedUserId } = state;
   let action =
     selectedUserId === id ? (
       <FaTimes
@@ -81,7 +83,8 @@ const UserCardBodyBack = ({ emailId, cell, phone }) => {
 };
 
 const UserThumbnail = ({ id, image }) => {
-  const { setSelectedUserId } = useContext(UserContext);
+  const [state] = useUserContext();
+  const { setSelectedUserId } = state;
 
   return (
     <div className="user-thumbnail">
@@ -154,7 +157,8 @@ const UserTileCard = ({ front, user }) => {
 };
 
 const UserTile = ({ user }) => {
-  const { selectedUserId } = useContext(UserContext);
+  const [state] = useUserContext();
+  const { selectedUserId } = state;
   let contentCls = "content";
   if (selectedUserId === user.id) {
     contentCls += " flipped";
@@ -172,8 +176,8 @@ const UserTile = ({ user }) => {
 };
 
 const UsersList = () => {
-  const { users } = useContext(UserContext);
-
+  const [state] = useUserContext();
+  const { users } = state;
   return (
     <div className="row">
       {users.length > 0 &&

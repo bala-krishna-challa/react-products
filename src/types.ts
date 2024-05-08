@@ -17,6 +17,7 @@ export interface User {
 export interface UserContextState {
   users: User[];
   selectedUserId: string;
+  setSelectedUserId: (userId: string) => void;
 }
 
 export interface SetUsersAction {

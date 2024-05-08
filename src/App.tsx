@@ -11,11 +11,11 @@ import { TOKEN } from "./constants";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 import Users from "./Users/Users";
+import { UserProvider } from "./contexts/UserProvider";
 
 function App() {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const token = sessionStorage.getItem(TOKEN);
-
   // const [time, setTime] = useState(() => new Date());
   // const [color, setColor] = useState("lightcoral");
 
@@ -38,7 +38,11 @@ function App() {
     return <Login onUserLogin={setUserLoggedIn} />;
   }
 
-  return <Users />;
+  return (
+    <UserProvider>
+      <Users />
+    </UserProvider>
+  );
 }
 
 export default App;
