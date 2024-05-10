@@ -7,7 +7,7 @@ import {
 } from "../constants";
 import Form, { FormData, Field } from "../components/Form/Form";
 import Register from "../Register/Register";
-import useHttp from "../hooks/useHttp";
+import useHttp from "../custom-hooks/useHttp";
 
 interface LoginFormData extends FormData {
   emailId: string;

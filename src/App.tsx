@@ -12,6 +12,10 @@ import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 import Users from "./Users/Users";
 import { UserProvider } from "./contexts/UserProvider";
+import StopWatch from "./StopWatch/StopWatch";
+import Input from "./StopWatch/Input";
+import UsingMemo from "./hooks/UsingMemo";
+import UsingLayoutEffect from "./hooks/UsingLayoutEffect";
 
 function App() {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
@@ -34,15 +38,11 @@ function App() {
   // The time dependencies change /  the callback function would execute to clear any memory or subscriptions. and then execute setting work
   // The callback function would be executed the time component gets destroyed / unmounted
 
-  if (!token) {
-    return <Login onUserLogin={setUserLoggedIn} />;
-  }
+  // if (!token) {
+  //   return <Login onUserLogin={setUserLoggedIn} />;
+  // }
 
-  return (
-    <UserProvider>
-      <Users />
-    </UserProvider>
-  );
+  return <UsingLayoutEffect />;
 }
 
 export default App;

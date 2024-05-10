@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
 import Register from "../Register/Register";
-import useHttp from "../hooks/useHttp";
+import useHttp from "../custom-hooks/useHttp";
 import { User } from "../types";
 import UserList from "./UserList";
 import InfoContext from "../contexts/InfoContext";

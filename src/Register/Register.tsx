@@ -15,7 +15,7 @@ import {
 } from "../constants";
 import { Field, FormData } from "../components/Form/Form";
 import FormFields from "../components/Form/FormFields";
-import useHttp from "../hooks/useHttp";
+import useHttp from "../custom-hooks/useHttp";
 import Model from "../Model/Model";
 import InfoContext from "../contexts/InfoContext";
 
