@@ -16,6 +16,7 @@ import StopWatch from "./StopWatch/StopWatch";
 import Input from "./StopWatch/Input";
 import UsingMemo from "./hooks/UsingMemo";
 import UsingLayoutEffect from "./hooks/UsingLayoutEffect";
+import UsingImperativeHandle from "./hooks/UsingImerativeHandle";
 
 function App() {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
@@ -42,7 +43,7 @@ function App() {
   //   return <Login onUserLogin={setUserLoggedIn} />;
   // }
 
-  return <UsingLayoutEffect />;
+  return <UsingImperativeHandle />;
 }
 
 export default App;
